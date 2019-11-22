@@ -1,0 +1,33 @@
+w(i,j,k):
+    return D[i][j]+D[j][k]+D[i][k]
+
+minWeight():
+    dp: 8*8数组
+    st: 8*8数组
+    T: 权重最小时，弦的集合
+    q: 队列
+    for i <- 1 to n-1
+        dp[i][i] <- 0
+    for t <- 1 to n-1
+        for i <- n-1-t to 1
+            j <- i+t
+            min_c <- INT_MAX
+            for k <- i to j-1
+                cur_c <- t[i][k]+t[k+1][j]+w(i-1,k,j)
+                if cur_c < min_c
+                    min_c = cur_c
+                    pos_c = k
+            dp[i][j] = min_c
+            st[i][j] = pos_c
+    q.push(<1,7>)
+    while(!q.empty())
+        a = q.front()
+        a.pop()
+        k = st[a._1, a._2]
+        if k - a._1 > 1
+            T.push(<a._1, k+1>)
+            q.push(<a._1, k>)
+        if a._2 - k > 1
+            T.push(<k+1, a._2+1>)
+            q.push(<k+1, a._2>)
+    return dp[1][7], T
