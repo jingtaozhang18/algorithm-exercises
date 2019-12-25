@@ -62,100 +62,73 @@ void print_v(vector<vector<int > >& m){
 class state
 {
 	public:
-		state():cost(0), dis(0), next(nullptr), recalc(true){}
-		state(int cost, int dis):cost(cost), dis(dis), next(nullptr), recalc(true){}
-		state(int cost, int dis, state* next):cost(cost), dis(dis), next(next), recalc(true){}
-		bool operator==(const state& rhs); // 比较两个节点是相等的
-		void del_dup(); // 删除以当前节点的下一个节点为头的链表中的重复节点。// 重复节点删除后面的节点
-		void show(); // 展示链表中的内容（不包括该节点）
+		state():cost(0), dis(0), recalc(true){}
+		state(int cost, int dis):cost(cost), dis(dis), recalc(true){}
+		bool operator==(const state&); // 比较两个节点是相等的
+		size_t operator()(const state&) const; // 自定义类的哈希函数
 		int cost;
 		int dis;
 		bool recalc;
-		state* next;
 };
 bool state::operator==(const state& rhs){ 
 	return this->cost == rhs.cost && this->dis == rhs.dis;
 }
-void state::del_dup(){ 
-	if (this == nullptr) return;
-	state *cur_p = this->next; // 当前要处理的节点
-	if (cur_p == nullptr) return;
-	state *p, *father; // 向后遍历的节点,其父节点
-	while(cur_p){
-		p = cur_p->next;
-		father = cur_p;
-		while(p){
-			if(*p==*cur_p){ // 遇到相等的删除
-				// 删除之前判断状态是够需要刷新
-				if (p->recalc) cur_p->recalc = true;
-				father->next=p->next;
-				delete p;
-				p = father->next;
-			}
-			else // 不是相等的，继续向下处理
-				p=p->next;
-		}
-		cur_p = cur_p->next;	
-	}
+size_t state::operator()(const state& rhs) const{
+	return size_t(rhs.cost << 16 + rhs.dis);
 }
-
-void state::show(){
-	if (this == nullptr) return;
-	state *p = this->next; // 当前要处理的节点
-	cout << p << ":" << endl;
-	while(p){
-		cout << '\t' << p->cost << '\t' << p->dis << endl;
-	}
-	cout << endl;
-
-}
-
 
 int main(){
+	set<state *> s_test;
+	s_test.insert(new state());
+	(*s_test.begin())->recalc = false; // 存储的指针类型就可以实现这种操作
+
+
+
     vector<vector<int> > m1 = readMatrixFromTxt("m1.txt"); // 距离
 	vector<vector<int> > m2 = readMatrixFromTxt("m2.txt"); // 代价
 	const int Num_City = m1.size();
 	int i = 0;
-	vector<state *> dp(Num_City);
-	for(i = 0; i < Num_City; ++i){
-		dp[i] = new state;
-	}
-	dp[0]->next = new state(); // 初始化状态
+	vector<set<state> > dp(Num_City);
+	dp[0].insert(state()); // 初始化状态
 
 	set<int> todos;
 	todos.insert(0); // 初始化，把自己放到需要处理的列表中
 
 	int p, d, c; // 处理的城市标号，距离，代价
 	set<int>::iterator it;
+	set<state>::iterator dp_it, dp_tmp;
 	while(!todos.empty()){
 		it = todos.begin(); // 集合中的第一个点
 		p = *it;
-		cout << "del " << p << "\t";
+		std::cout << "del " << p << "\t";
 		todos.erase(it); // 从集合中删除这个点
-		// 状态集合进行去重
-		dp[p]->del_dup(); // 线性去重的速度比较慢，后面会使用集合来进行处理
-		state *p_state = dp[p]->next;
-		while(p_state){
-			if(p_state->recalc){
+		dp_it = dp[p].begin();
+		while(dp_it != dp[p].end()){
+			if(dp_it->recalc){
 				for(i = 0; i < Num_City; ++i){
 					d = m1[p][i], c = m2[p][i]; // p 到 i 的距离和代价
 					if(d == No_Way) continue; // 没有路的话，就不进行处理了
-					if(p_state->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
-					// 插入新的状态节点
-					state *t = new state(p_state->cost + c, p_state->dis + d, dp[i]->next);
-					dp[i]->next = t;
+					if(dp_it->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
+					// 判断节点是否已经存在
+					state s(dp_it->cost + c, dp_it->dis + d);
+					if((dp_tmp = dp[i].find(s)) != dp[i].end){ // 节点存在
+						if(dp_tmp->recalc == false){
+							dp[i].erase(dp_tmp);
+							dp[i].insert(s);
+						}
+					}else{ // 没有找到
+						dp[i].insert(s);
+					}
+					
 					todos.insert(i); // 添加新的任务点
 					cout << "add " << i << "\t";
 				}
+				// 更改recalc为false;
+				dp[p].erase(dp_it)// 蠢到家了，TODO，写不下去了
 			}
-			else
-				p_state->recalc = false;
-			p_state = p_state->next;
+			++dp_it;
 		}
 		cout << endl;
 	}
-	
-
-	dp[Num_City-1]->show();
     return 0;
 }
