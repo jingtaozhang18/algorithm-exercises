@@ -38,6 +38,8 @@ vector<vector<int> > readMatrixFromTxt(string file_name){
 	if(infile.good()){
 		while(!infile.fail()){
 			getline(infile, textline);
+			if(textline=="") continue;
+			textline[textline.length()-1] = '\t';
 			aline_words.clear();
 			split(textline, delim, aline_words);
 			ans.push_back(aline_words);
@@ -66,6 +68,7 @@ class state
 		state():cost(0), dis(0), recalc(true){}
 		state(int cost, int dis):cost(cost), dis(dis), recalc(true){}
 		bool operator==(const state&); // 比较两个节点是相等的
+		bool operator<(const state&); // 一个节点比另一个节点小
 		int get_key(); // 计算hash属性
 		int cost;
 		int dis;
@@ -73,6 +76,9 @@ class state
 };
 bool state::operator==(const state& rhs){ 
 	return this->cost == rhs.cost && this->dis == rhs.dis;
+}
+bool state::operator<(const state& rhs){ 
+	return this->cost < rhs.cost && this->dis < rhs.dis;
 }
 int state::get_key(){
 	// operator '<<' has lower precedence than '+'
@@ -98,7 +104,7 @@ int main(){
 	while(!todos.empty()){
 		it = todos.begin(); // 集合中的第一个点
 		p = *it;
-		std::cout << "del " << p << "\t";
+		// std::cout << "del " << p << "\t";
 		todos.erase(it); // 从集合中删除这个点
 
 		p_it = process[p].begin();
@@ -109,16 +115,22 @@ int main(){
 					d = m1[p][i], c = m2[p][i]; // p 到 i 的距离和代价
 					if(d == No_Way) continue; // 没有路的话，就不进行处理了
 					if(p_state->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
-					// TODO 若存在路径又长，代价又高的情况，则也应该剪枝
-					// 判断节点是否已经存在
+					// 判断节点是否有价值，有价值加入待处理集合中
 					state *s = new state(p_state->cost + c, p_state->dis + d);
 					if((p_temp = process[i].find(s->get_key())) != process[i].end()){ // 节点存在
-						// p_temp->second->recalc = true; // 已经计算过了，没有继续
-						delete s;
+						delete s; // 已经计算过了，不需要继续计算了
 					}else{ // 没有找到
-						process[i][s->get_key()] = s;
-						todos.insert(i); // 添加新的任务点
-						cout << "add " << i << "\t";
+						for(p_temp = process[i].begin(); p_temp!=process[i].end(); ++p_temp){
+							if(*(p_temp->second) < *s){ // 有完美更优解，不需要继续计算了
+								delete s;
+								break;
+							}
+						}
+						if(p_temp==process[i].end()){ // 没有找到一个完美更优的
+							process[i][s->get_key()] = s;
+							todos.insert(i); // 添加新的任务点
+							// cout << "add " << i << "\t";
+						}
 					}
 				}
 				// 更改recalc为false;
@@ -126,7 +138,16 @@ int main(){
 			}
 			++p_it;
 		}
-		cout << endl;
+		// cout << endl;
 	}
+	int min_dis = Max_Int;
+	int ans_cost = Max_Int;
+	for(p_it=process[Num_City-1].begin(); p_it!=process[Num_City-1].end(); ++p_it){
+		c = p_it->second->cost, d = p_it->second->dis;
+		if(min_dis > d){
+			min_dis = d, ans_cost = c;
+		}
+	}
+	cout << "最短距离为: " << min_dis << "\t对应的开销为: " << ans_cost << endl;
     return 0;
 }
