@@ -2,6 +2,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <stack>
 #include "string.h"
 #include <fstream>
 
@@ -65,13 +66,15 @@ void print_v(vector<vector<int > >& m){
 class state
 {
 	public:
-		state():cost(0), dis(0), recalc(true){}
-		state(int cost, int dis):cost(cost), dis(dis), recalc(true){}
+		state():cost(0), dis(0), index(0), recalc(true), pre(nullptr){}
+		state(int cost, int dis, state* pre, int index):cost(cost), dis(dis), recalc(true), pre(pre), index(index){}
 		bool operator==(const state&); // 比较两个节点是相等的
 		bool operator<(const state&); // 一个节点比另一个节点小
 		int get_key(); // 计算hash属性
 		int cost;
 		int dis;
+		int index; // 节点的编号
+		state* pre;
 		bool recalc;
 };
 bool state::operator==(const state& rhs){ 
@@ -116,7 +119,7 @@ int main(){
 					if(d == No_Way) continue; // 没有路的话，就不进行处理了
 					if(p_state->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
 					// 判断节点是否有价值，有价值加入待处理集合中
-					state *s = new state(p_state->cost + c, p_state->dis + d);
+					state *s = new state(p_state->cost + c, p_state->dis + d, p_state, i);
 					if((p_temp = process[i].find(s->get_key())) != process[i].end()){ // 节点存在
 						delete s; // 已经计算过了，不需要继续计算了
 					}else{ // 没有找到
@@ -146,8 +149,22 @@ int main(){
 		c = p_it->second->cost, d = p_it->second->dis;
 		if(min_dis > d){
 			min_dis = d, ans_cost = c;
+			p_temp = p_it;
 		}
 	}
-	cout << "最短距离为: " << min_dis << "\t对应的开销为: " << ans_cost << endl;
+	stack<int> route;
+	state* s = p_temp->second;
+	while(s){
+		route.push(s->index);
+		s = s->pre;
+	}
+	cout << "最短距离为: " << min_dis << "\t对应的开销为: " << ans_cost << "\t 路径为:" << endl;
+	while(true){
+		cout << route.top()+1 << " ";
+		route.pop();
+		if(route.empty()) break;
+		else cout << "->";
+	}
+	cout << endl;
     return 0;
 }
