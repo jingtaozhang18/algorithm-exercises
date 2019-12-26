@@ -3,6 +3,7 @@
 #include <set>
 #include <map>
 #include <stack>
+#include <queue>
 #include "string.h"
 #include <fstream>
 
@@ -66,8 +67,8 @@ void print_v(vector<vector<int > >& m){
 class state
 {
 	public:
-		state():cost(0), dis(0), index(0), recalc(true), pre(nullptr){}
-		state(int cost, int dis, state* pre, int index):cost(cost), dis(dis), recalc(true), pre(pre), index(index){}
+		state():cost(0), dis(0), index(0), pre(nullptr){}
+		state(int cost, int dis, state* pre, int index):cost(cost), dis(dis), pre(pre), index(index){}
 		bool operator==(const state&); // 比较两个节点是相等的
 		bool operator<(const state&); // 一个节点比另一个节点小
 		int get_key(); // 计算hash属性
@@ -75,7 +76,6 @@ class state
 		int dis;
 		int index; // 节点的编号
 		state* pre;
-		bool recalc;
 };
 bool state::operator==(const state& rhs){ 
 	return this->cost == rhs.cost && this->dis == rhs.dis;
@@ -97,50 +97,39 @@ int main(){
 	state *init = new state();
 	process[0][init->get_key()] = init; // 初始化状态
 
-	set<int> todos;
-	todos.insert(0); // 初始化，把自己放到需要处理的列表中
+	queue<state *> todos;
+	todos.push(init); // 初始化，把自己放到需要处理的列表中
 
 	int p, d, c; // 处理的城市标号，距离，代价
-	set<int>::iterator it;
 	map<int, state*>::iterator p_it, p_temp;
 	state *p_state;
 	while(!todos.empty()){
-		it = todos.begin(); // 集合中的第一个点
-		p = *it;
+		p_state = todos.front(); // 集合中的第一个点
+		p = p_state->index;
 		// std::cout << "del " << p << "\t";
-		todos.erase(it); // 从集合中删除这个点
-
-		p_it = process[p].begin();
-		while(p_it != process[p].end()){
-			p_state = p_it->second;
-			if(p_state->recalc){
-				for(i = 0; i < Num_City; ++i){
-					d = m1[p][i], c = m2[p][i]; // p 到 i 的距离和代价
-					if(d == No_Way) continue; // 没有路的话，就不进行处理了
-					if(p_state->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
-					// 判断节点是否有价值，有价值加入待处理集合中
-					state *s = new state(p_state->cost + c, p_state->dis + d, p_state, i);
-					if((p_temp = process[i].find(s->get_key())) != process[i].end()){ // 节点存在
-						delete s; // 已经计算过了，不需要继续计算了
-					}else{ // 没有找到
-						for(p_temp = process[i].begin(); p_temp!=process[i].end(); ++p_temp){
-							if(*(p_temp->second) < *s){ // 有完美更优解，不需要继续计算了
-								delete s;
-								break;
-							}
-						}
-						if(p_temp==process[i].end()){ // 没有找到一个完美更优的
-							process[i][s->get_key()] = s;
-							todos.insert(i); // 添加新的任务点
-							// cout << "add " << i << "\t";
-						}
+		for(i = 0; i < Num_City; ++i){
+			d = m1[p][i], c = m2[p][i]; // p 到 i 的距离和代价
+			if(d == No_Way) continue; // 没有路的话，就不进行处理了
+			if(p_state->cost + c > Max_Cost) continue; // 超过了最大的代价，剪枝
+			// 判断节点是否有价值，有价值加入待处理集合中
+			state *s = new state(p_state->cost + c, p_state->dis + d, p_state, i);
+			if((p_temp = process[i].find(s->get_key())) != process[i].end()){ // 节点存在
+				delete s; // 已经计算过了，不需要继续计算了
+			}else{ // 没有找到
+				for(p_temp = process[i].begin(); p_temp!=process[i].end(); ++p_temp){
+					if(*(p_temp->second) < *s){ // 有完美更优解，不需要继续计算了
+						delete s;
+						break;
 					}
 				}
-				// 更改recalc为false;
-				p_state->recalc = false;
+				if(p_temp==process[i].end()){ // 没有找到一个完美更优的
+					process[i][s->get_key()] = s;
+					todos.push(s); // 添加新的任务点
+					// cout << "add " << i << "\t";
+				}
 			}
-			++p_it;
 		}
+		todos.pop(); // 从队列中删除
 		// cout << endl;
 	}
 	int min_dis = Max_Int;
