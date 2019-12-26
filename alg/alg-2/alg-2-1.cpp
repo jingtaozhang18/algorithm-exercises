@@ -51,25 +51,11 @@ vector<vector<int> > readMatrixFromTxt(string file_name){
 	return ans;
 }
 
-void print_v(vector<vector<int > >& m){
-	for(int i=0;i<m.size();++i){
-		for(int j=0;j<m[i].size();++j){
-			if (i==j)
-				cout << "  \t";
-			else if (m[i][j] == 9999)
-				cout << "!!" << "\t";
-			else
-				cout<< m[i][j]<<"\t";
-		}
-		cout<<endl;
-	}
-}
 class state
 {
 	public:
 		state():cost(0), dis(0), index(0), pre(nullptr){}
 		state(int cost, int dis, state* pre, int index):cost(cost), dis(dis), pre(pre), index(index){}
-		bool operator==(const state&); // 比较两个节点是相等的
 		bool operator<(const state&); // 一个节点比另一个节点小
 		int get_key(); // 计算hash属性
 		int cost;
@@ -77,9 +63,6 @@ class state
 		int index; // 节点的编号
 		state* pre;
 };
-bool state::operator==(const state& rhs){ 
-	return this->cost == rhs.cost && this->dis == rhs.dis;
-}
 bool state::operator<(const state& rhs){ 
 	return this->cost < rhs.cost && this->dis < rhs.dis;
 }
@@ -106,7 +89,6 @@ int main(){
 	while(!todos.empty()){
 		p_state = todos.front(); // 集合中的第一个点
 		p = p_state->index;
-		// std::cout << "del " << p << "\t";
 		for(i = 0; i < Num_City; ++i){
 			d = m1[p][i], c = m2[p][i]; // p 到 i 的距离和代价
 			if(d == No_Way) continue; // 没有路的话，就不进行处理了
@@ -125,12 +107,10 @@ int main(){
 				if(p_temp==process[i].end()){ // 没有找到一个完美更优的
 					process[i][s->get_key()] = s;
 					todos.push(s); // 添加新的任务点
-					// cout << "add " << i << "\t";
 				}
 			}
 		}
 		todos.pop(); // 从队列中删除
-		// cout << endl;
 	}
 	int min_dis = Max_Int;
 	int ans_cost = Max_Int;
@@ -152,7 +132,7 @@ int main(){
 		cout << route.top()+1 << " ";
 		route.pop();
 		if(route.empty()) break;
-		else cout << "->";
+		else cout << "-> ";
 	}
 	cout << endl;
     return 0;
