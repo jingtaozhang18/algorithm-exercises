@@ -1,0 +1,37 @@
+stateSet[0] <- {(0,0,0,0)}
+taskTodos <- queue((0,0,0,0))
+while(!taskTodos.empty())
+    p_state <- taskTodos.front // 取出第一个需要处理的state
+    taskTodos.pop()            // 删除这个state
+    for i <- 0 to 49
+        if m1[p_state.index][i] == No_way
+            continue
+        if p_state.cost + m2[p_state.index][i] > max_cost
+            continue
+        state s = (p_state.cost + m2[p_state.index][i], p_state.road + m1[p_state.index][i], &p_state, i)
+        better = false
+        for k <- stateSet[i]
+            if k.cost < s.cost and k.road < s.road      // 判断新state是否有价值
+                better = true
+                break
+            if k.cost == s.cost and k.road == s.road    // 判断新state是否重复
+                better = true
+                break
+        if better  // 对不是有价值的节点进行剪枝
+            continue
+        else
+            stateSet[i].push(s)
+            taskTodos.push(s)
+
+ans_state = min_cost(stateSet) // 从中找出cost最小的state
+route = stack // 定义一个堆栈route
+p_state = ans_state
+while(p_state){
+    route.push(ans_state)
+    p_state = p_state.pre
+}
+print "最短路径："
+while(!route.empty()){
+    print(route.index + " ")
+    route.pop
+}
