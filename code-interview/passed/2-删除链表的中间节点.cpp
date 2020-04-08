@@ -6,12 +6,14 @@ struct list_node{
     struct list_node * next;
 }; //链表的节点
 
+int K;
+
 list_node * input_list(void) //读入链表
 {
     int n, val;
     list_node * phead = new list_node();
     list_node * cur_pnode = phead;
-    scanf("%d", &n);
+    scanf("%d %d", &n, &K);
     for (int i = 1; i <= n; ++i) {
         scanf("%d", &val);
         if (i == 1) {
@@ -29,27 +31,32 @@ list_node * input_list(void) //读入链表
     return phead;
 }
 
-void sol(list_node * a_head, list_node * b_head)
+list_node * remove_kth_node(list_node * head, int K)
 {
     //////在下面完成代码
-  while(a_head && b_head){
-    if(a_head->val==b_head->val){
-      cout<<a_head->val<<" ";
-      a_head=a_head->next;
-      b_head=b_head->next;
-    }else if(a_head->val<b_head->val){
-      a_head=a_head->next;
-    }else{
-      b_head=b_head->next;
-    }
+  if(K==1)
+    return head->next;
+  list_node*pr=head,*pf;
+  while(--K){
+    pf=pr;
+    pr=pr->next;
   }
-  cout<<endl;
+  pf->next=pf->next->next;
+  return head;
+}
+
+void print_list(list_node * head)
+{
+    while (head != NULL) {
+        printf("%d ", head->val);
+        head = head->next;
+    }
 }
 
 int main ()
 {
-    list_node * a_head = input_list(); // A 链表的头节点
-    list_node * b_head = input_list(); // B 链表的头节点
-    sol(a_head, b_head);
+    list_node * head = input_list(); // 链表的头节点
+    list_node * rhead = remove_kth_node(head, K);
+    print_list(rhead);
     return 0;
 }
