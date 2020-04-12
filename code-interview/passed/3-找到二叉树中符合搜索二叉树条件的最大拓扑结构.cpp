@@ -33,7 +33,7 @@ int sub(int root,bool right,int val){ //计算不满足左孩子或者右孩子�
     else root=0;
   }
   if(root){ // 砍掉整个分支
-    auto p=mp[root];
+    pair<int,int> p=mp[root];
     ans=p.first+p.second+1;
     while(!sta.empty()){
       if(right) mp[sta.top()].second-=ans;
@@ -53,12 +53,12 @@ int calc(int root){
   }
   int x=0,y=0;
   if(tree[root].lch&&tree[root].lch<root){
-    auto p=mp[tree[root].lch];
+    pair<int,int> p=mp[tree[root].lch];
     x=p.first+p.second+1;
     x-=sub(tree[root].lch,true,root);
   }
   if(tree[root].rch&&tree[root].rch>root){
-    auto p=mp[tree[root].rch];
+    pair<int,int> p=mp[tree[root].rch];
     y=p.first+p.second+1;
     y-=sub(tree[root].rch,false,root);
   }
@@ -72,6 +72,6 @@ int main(void){
   int n,val;
   scanf("%d%d",&n,&val);
   create_tree(n);
-  cout<<calc(val)<<endl;
+  printf("%d\n",calc(val));
   return 0;
 }
