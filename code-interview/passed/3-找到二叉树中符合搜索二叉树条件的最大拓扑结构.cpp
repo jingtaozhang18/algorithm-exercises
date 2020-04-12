@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-// 65% 通过率
+// 65% 通过率 和书中最优解法一致了，不知道为什么超时
 struct node{
   int lch,rch;
 };
