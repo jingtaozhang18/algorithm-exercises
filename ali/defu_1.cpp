@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 using namespace std;
+// 最快出完手中的牌
 const int N=20000008;
 int a[10],f[N];
 int minx(int x,int y){if(x<y)y=x;return y;}
