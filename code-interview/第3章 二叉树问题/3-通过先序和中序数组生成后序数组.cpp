@@ -32,7 +32,7 @@ void posPrint(int root){
       root=tree[root][1];
     }else{
       printf("%d ", root);
-      while(!aux.empty()&& (tree[aux.top()][1]==root||tree[aux.top()][1]==0)){
+      while(!aux.empty()&& (tree[aux.top()][1]==root||tree[aux.top()][1]==0)){ // 右孩子找到了父亲，或者没有右孩子的时候打印
         root=aux.top();
         printf("%d ", root);
         aux.pop();
