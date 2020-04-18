@@ -29,6 +29,7 @@ int main(void){
   }
 //  cout<<"max: "<<dp[len_a-1][len_b-1]<<endl;
   if(dp[i][j]) sta.push(str_a[i]);
+  if(sta.empty()) {cout<<-1<<endl; return 0;}
   while(!sta.empty()){
     cout<<sta.top();
     sta.pop();
