@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool dp[5001][5001];
+bool dp[5001][5001]; // [i,j] 表示 str_a[i:]和str_b[j:]可以组成aim[i+j:]
 int main(void){
   int i,j;
   string str_a,str_b,aim;
