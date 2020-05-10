@@ -3,10 +3,10 @@ using namespace std;
 
 int mem[100000]; // 维护最大堆
 int capacity=0; // 当前最大堆中的数量
-int size; // 最大堆的大小
+int k; // 最大堆的大小
 void add(int x){
   int i,fa,left,right;
-  if(capacity<size){ // 直接放入元素
+  if(capacity<k){ // 直接放入元素
     mem[capacity]=x;
     capacity++;
     // 从下向上进行维护
@@ -38,8 +38,8 @@ void add(int x){
 
 int main(void){
   int n,t;
-  cin>>n>>size;
+  cin>>n>>k;
   while(n--){cin>>t; add(t);}
-  while(size) cout<<mem[--size]<<" ";
+  while(k) cout<<mem[--k]<<" ";
   return 0;
 }
