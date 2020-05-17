@@ -20,7 +20,7 @@ cin.tie(0);
       while(L<R) tmp[i++]=arr[L++];
       while(j<B) tmp[i++]=arr[j++];
     }
-    while(i>0) --i,arr[i]=tmp[i]; // 此处的i并没有找到arr的最右端
+    while(i>0) --i,arr[i]=tmp[i]; // 此处的i并没有走到arr的最右端
   }
   cout<<ans<<endl;
   return 0;
