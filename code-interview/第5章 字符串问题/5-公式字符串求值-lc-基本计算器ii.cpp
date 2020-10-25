@@ -1,4 +1,4 @@
-// https://leetcode-cn.com/problems/basic-calculator-ii/submissions/
+// https://leetcode-cn.com/problems/basic-calculator-ii/
 // 在基本计算器的基础上进行了改进，在题目的要求之上支持括号的使用
 #include<bits/stdc++.h>
 using namespace std;
