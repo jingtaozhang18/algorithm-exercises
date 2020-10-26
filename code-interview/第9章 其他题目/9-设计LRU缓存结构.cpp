@@ -49,7 +49,7 @@ void jset(int a, int b){
   head=t, mp[a]=b, mn[a]=t, sz++;
 };
 
-int jget(int a){
+long long jget(int a){
   map<long long, long long>::iterator p=mp.find(a);
   if(p==mp.end()) return -1;
   jnew(mn.find(a)->second);
