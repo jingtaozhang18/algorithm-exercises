@@ -29,6 +29,8 @@ public:
         if(nums.size()==0) return false;
         vector<long long> tnums(nums.size()+1);
         int i;long long t;
+        // 在累加数组中先添加一个0, [i,j]区间的累加和为[j+1]-[i];
+        // 简化了从0到某个位置的区间和的计算
         tnums[0]=0;
         for(i=0,t=0;i<nums.size();++i) t+=nums[i], tnums[i+1]=t;
         return jgo(tnums, lower, upper, 0, tnums.size()-1);
