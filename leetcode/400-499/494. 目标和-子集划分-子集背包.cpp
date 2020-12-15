@@ -2,6 +2,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 划分成两部分A和B
+// sumA-sumB=S
+// sumA+sumA=S+sumA+sumB
+// 2*sumA=S+sumNums
 class Solution {
 public:
     int findTargetSumWays(vector<int>& nums, int S) {
