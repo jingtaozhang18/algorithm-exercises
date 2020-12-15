@@ -45,13 +45,13 @@ public:
             tail->next=new node(key,nullptr,tail);
             mp[key]=tail->next;
             mem[key]=value;
-            if(!head->next) head->next=tail->next; // 初始化挂载
+            // if(!head->next) head->next=tail->next; // 初始化挂载 蔡师弟指出，这是多余的，因为初始化的时候head和tail相等
             tail=tail->next; // 更新tail指针
             size++;
             if(size>cap){
                 node*d=head->next; // 要删除的节点
                 if(d->next) d->next->pre=head; // 更新前向指针
-                if(d==tail) tail=head; // 更新tail
+                // if(d==tail) tail=head; // 更新tail 蔡师弟指出，此项是多余的，容量大于1,没有必要恢复到初始化状态
                 head->next=d->next; // 更新后向指针
                 mem.erase(mem.find(d->val)); // 更新字典
                 mp.erase(mp.find(d->val));
