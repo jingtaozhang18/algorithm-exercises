@@ -2,6 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 取消优先级队列，直接记录最大值，减少时间开销
 class Solution {
 public:
     bool judge(vector<int>& time, int m, int t){ // 每天t小时，是否OK
