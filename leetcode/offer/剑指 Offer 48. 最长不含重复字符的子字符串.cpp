@@ -12,7 +12,7 @@ public:
         record[s[0]]=0;
         for(i=1;i<s.length();++i){
             if(record[s[i]]==-1) dp[i]=dp[i-1]+1;
-            else dp[i]=min(i-record[s[i]], dp[i-1]+1);
+            else dp[i]=min(i-record[s[i]], dp[i-1]+1); // 因为只用到了dp[i-1], 可以使用空间压缩的思想，进行简化
             record[s[i]]=i, ans=max(ans, dp[i]);
         }
         return ans;
