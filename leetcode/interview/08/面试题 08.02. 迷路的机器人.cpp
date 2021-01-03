@@ -27,7 +27,7 @@ public:
     vector<vector<int>> pathWithObstacles(vector<vector<int>>& obstacleGrid) {
         ans.clear();
         m=obstacleGrid.size(), n=obstacleGrid[0].size();
-        seen=vector(m, vector<bool>(n, false)); // 全局变量的赋值
+        seen=vector<vector<bool>>(m, vector<bool>(n, false)); // 全局变量的赋值
         seen[0][0]=true;
         // 左上角机器人的位置也有可能有障碍物
         if(obstacleGrid[0][0]==0&&jgo(obstacleGrid, 0, 0)) return ans;
