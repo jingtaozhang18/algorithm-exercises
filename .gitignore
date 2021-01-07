@@ -6,3 +6,5 @@
 .vscode/
 *.dSYM
 test.cpp
+cache/
+.idea/
