@@ -12,7 +12,9 @@ struct ListNode {
 class Solution {
 public:
     ListNode* deleteNode(ListNode* head, int val) {
-        if(!head||head->val==val) return head->next;
+        // if(!head||head->val==val) return head->next; 好明显的错误，当时没有发现，欺负了数据输入的友好
+        if(!head) return head;
+        if(head->val==val) return head->next;
         ListNode* t=head;
         for(;t->next;t=t->next) if(t->next->val==val) break;
         if(t->next) t->next=t->next->next;
