@@ -16,3 +16,18 @@ public:
         return ans;
     }
 };
+
+// 每日一题 复习
+class Solution {
+public:
+    int findLengthOfLCIS(vector<int>& nums) {
+      int i, ans=0, size=nums.size();
+      if(size==0) return ans;
+      vector<int> arr(size);
+      for(i=1;i<size;++i){
+        if(nums[i]>nums[i-1]) arr[i]=arr[i-1]+1;
+        ans=max(ans, arr[i]);
+      }
+      return ++ans;
+    }
+};
