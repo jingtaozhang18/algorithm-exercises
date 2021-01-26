@@ -13,7 +13,8 @@ public:
     void jinsert(node*root, long long val){
         root->add++; // 整个段增加
         if(root->low==root->high) return;
-        long long mid=(root->low+root->high)>>1;
+        long long mid=(root->low+root->high)>>1; // 危险操作，容易越界
+        long long mid=root->low+(root->high-root->low)/2;
         if(val<=mid){ // 向左边添加
             if(!root->left) root->left=new node(root->low, mid);
             jinsert(root->left, val);

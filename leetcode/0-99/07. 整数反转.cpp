@@ -5,7 +5,7 @@ using namespace std;
 class Solution {
 public:
     int reverse(int x) {
-      int a=INT_MAX/10, b=INT_MAX-a*10, c=INT_MIN/10, d=INT_MIN-c, ans=0, t;
+      int a=INT_MAX/10, b=INT_MAX-a*10, c=INT_MIN/10, d=INT_MIN-c*10, ans=0, t;
       while(x){
         t=x%10, x/=10;
         if(ans>a) return 0;
