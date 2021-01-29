@@ -76,5 +76,5 @@ func main() {
 	start = time.Now()
 	testArr3 = getTestArr()
 	qsort(&testArr3, 0, len(testArr3)-1)
-	fmt.Printf("单线程快排消耗时间：%s", time.Since(start))
+	fmt.Printf("单线程快排消耗时间：%s\n", time.Since(start))
 }
