@@ -7,7 +7,7 @@ public:
     string longestPalindrome(string s) {
       int i,size=2*s.size()+1;
       string t=string(size, '#');
-      for(i=0;i<s.size();++i) t[2*i+1]=s[i]; // 插入
+      for(i=0;i<s.size();++i) t[2*i+1]=s[i]; // 插入#字符
       vector<int> dp(size, 0); // 半径范围包括自己
       int index, pr=-1, max_len=0, max_index=0;
       for(i=0;i<size;++i){
