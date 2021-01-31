@@ -48,7 +48,7 @@ public:
 
 // 同样的思路，使用tuple可以提升速度
 // vector 116 ms	19 MB
-// tuple  36 ms	13.1 MB
+// tuple  36 ms	    13.1 MB
 class Solution {
 public:
     int dfs(vector<vector<pair<int, int>>>& mst, int id, int tar, int ans, int father){
