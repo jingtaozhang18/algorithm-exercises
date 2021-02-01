@@ -83,6 +83,18 @@ public:
     }
 };
 
+// make_heap
+class Solution {
+public:
+    vector<int> smallestK(vector<int>& arr, int k) {
+        make_heap(arr.begin(), arr.end());
+        k=arr.size()-k;
+        while(k--) {pop_heap(arr.begin(), arr.end()); arr.pop_back();}
+        return arr;
+    }
+};
+
 // 保持堆大小不超过k       通过	   36 ms   18.3 MB	C++
 // 先建堆再取k个最小数字	通过	48 ms	18.7 MB C++
 // 原地堆排               通过	  40 ms	  18 MB   C++
+// make_heap            通过	40 ms	17.6 MB  C++ 
