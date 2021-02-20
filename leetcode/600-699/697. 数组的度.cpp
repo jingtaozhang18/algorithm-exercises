@@ -25,3 +25,30 @@ public:
         return ++ans;
     }
 };
+
+// 使用tuple之后没有明显的速度提升
+class Solution {
+public:
+    int findShortestSubArray(vector<int>& nums) {
+        unordered_map<int, tuple<int, int, int>> map;
+        int i, size=nums.size(), f=0, ans=0,a,b,c;
+        for(i=0;i<size;++i){
+            if(map.find(nums[i])==map.end()) {
+                map[nums[i]] = {i, i, 1};
+            }else{
+                get<1>(map[nums[i]]) = i;
+                get<2>(map[nums[i]])++;
+            }
+        }
+        for(auto p:map){
+            tie(a,b,c) = p.second;
+            if(c>f){
+                f=c;
+                ans=b-a;
+            }else if(c==f){
+                ans=min(ans, b-a);
+            }
+        }
+        return ++ans;
+    }
+};
