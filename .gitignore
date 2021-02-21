@@ -6,6 +6,6 @@
 .vscode/
 /go.mod
 *.dSYM
-test.cpp
+test*.cpp
 cache/
 .idea/
