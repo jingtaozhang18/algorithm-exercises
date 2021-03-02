@@ -2,7 +2,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//leetcode submit region begin(Prohibit modification and deletion)
+class Solution {
+public:
+    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+        if(matrix.size()==0||matrix[0].size()==0) return false;
+        int i=0,j=matrix[0].size()-1;
+        while(i<matrix.size()&&j>=0){
+            if(matrix[i][j]==target) return true;
+            else if(matrix[i][j]<target) i++;
+            else j--;
+        }
+        return false;
+    }
+};
+
+// again
 class Solution {
 public:
     bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
@@ -16,4 +30,3 @@ public:
         return false;
     }
 };
-//leetcode submit region end(Prohibit modification and deletion)

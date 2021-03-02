@@ -23,3 +23,16 @@ public:
         return judge(A, B) || isSubStructure(A->left, B) || isSubStructure(A->right, B);
     }
 };
+
+// again
+class Solution {
+public:
+    bool judge(TreeNode *root, TreeNode * child){
+      if(!child) return true;
+      return root && root->val==child->val && judge(root->left, child->left) && judge(root->right, child->right);
+    }
+    bool isSubStructure(TreeNode* A, TreeNode* B) { // 自身在进行遍历尝试
+      if(!A||!B) return false; // 防御性编程
+      return judge(A, B) || isSubStructure(A->left, B) || isSubStructure(A->right, B);
+    }
+};

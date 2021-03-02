@@ -13,3 +13,18 @@ public:
         return -1;
     }
 };
+
+// again
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i, n=nums.size();
+        for(i=0;i<n;++i){
+            while(nums[i]!=i){
+                if(nums[nums[i]]==nums[i]) return nums[i];
+                swap(nums[nums[i]], nums[i]);
+            }
+        }
+        return 0;
+    }
+};
