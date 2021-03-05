@@ -33,7 +33,7 @@ public:
 
 
 
-// 一个输入栈, 一个输出栈, 保证每个元素最多只会入两次栈, 提升执行效率
+// 一个输入栈, 一个输出栈, 保证每个元素最多只会入两次栈, 提升执行效率 复习
 class CQueue {
 public:
     stack<int> insta, outsta;
