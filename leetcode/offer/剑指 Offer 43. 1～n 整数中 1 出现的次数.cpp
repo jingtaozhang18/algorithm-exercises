@@ -23,3 +23,30 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int countDigitOne(int n) {
+      long long i, ans=0;
+      for(i=1;i<=n;i*=10){ // i代表位数
+        ans+=(long long)n/(i*10)*i; // 第i位，每pow(10, i) 出现pow(10, i-1)次
+        if(n%(i*10)>=i) 
+          ans+=min(n%(i*10), 2*i-1)-i+1; // 余数部分的计算，第i位，min(i%pow(10, i+1), 2*pow(10, i)-1) - pow(10, i-1) + 1
+      }
+      return ans;
+    }
+};
+
+// 复习
+class Solution {
+public:
+    int countDigitOne(int n) {
+      long long ans=0, x, y; // 注意数值范围
+      for(x=1,y=10;x<=n;x*=10, y*=10){
+        ans+=(long long) n / y * x; // 完整的出现次数
+        if(n%y>=x) ans+=min(n%y, 2*x-1)-x+1;
+      }
+      return ans;
+    }
+};

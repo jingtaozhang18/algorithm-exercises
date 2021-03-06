@@ -16,3 +16,21 @@ public:
         return grid[row-1][col-1];
     }
 };
+
+// 复习
+class Solution {
+public:
+    int maxValue(vector<vector<int>>& grid) {
+      int i, j, x, m=grid.size(), n=m==0?0:grid[0].size();
+      if(m==0||n==0) return 0;
+      for(i=0;i<m;++i){
+        for(j=0;j<n;++j){
+          x=0;
+          if(i)x=max(x, grid[i-1][j]);
+          if(j)x=max(x, grid[i][j-1]);
+          grid[i][j]+=x;
+        }
+      }
+      return grid[m-1][n-1];
+    }
+};
