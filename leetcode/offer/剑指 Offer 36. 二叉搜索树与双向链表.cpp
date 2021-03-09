@@ -46,3 +46,22 @@ public:
         return head;
     }
 };
+
+class Solution {
+public:
+    Node* treeToDoublyList(Node* root) {
+        if(!root) return nullptr;
+        stack<Node*> sta;
+        Node* cur=root, *head=nullptr, *pre=nullptr;
+        while(cur||sta.size()){ // 非递归的中序遍历
+            while(cur) {sta.push(cur);cur=cur->left;} // 中序框架
+            cur=sta.top(); sta.pop(); // 中序框架
+            if(!head) head=cur;
+            else pre->right=cur, cur->left=pre;
+            pre = cur;
+            cur = cur->right; // 中序框架
+        }
+        pre->right=head, head->left=pre;
+        return head;
+    }
+};

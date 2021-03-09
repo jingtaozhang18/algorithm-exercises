@@ -20,3 +20,16 @@ public:
         return t;
     }
 };
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *a=nullptr, *b=head, *c;
+        while(b){
+            c=b->next;
+            b->next=a;
+            a=b, b=c;
+        }
+        return a;
+    }
+};
