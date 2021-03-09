@@ -29,7 +29,7 @@ func getInstance() *single {
 	return singleInstance
 }
 
-func main() {
+func singleInstanceHandler() {
 
 	for i := 0; i < 30; i++ {
 		go getInstance()

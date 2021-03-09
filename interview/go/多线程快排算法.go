@@ -66,7 +66,7 @@ func getTestArr() []int {
 	return testArr
 }
 
-func main() {
+func mulitThreadQuickSortHandler() {
 	testArr3 := getTestArr()
 	chanWait := make(chan int)
 	start := time.Now()
