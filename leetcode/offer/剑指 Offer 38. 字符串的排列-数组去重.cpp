@@ -21,3 +21,26 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    void jgo(string &s, int i, vector<string> &ans){
+        if(i==s.size()) ans.push_back(s);
+        vector<bool> used(200, false);
+        for(int j=i;j<s.size();++j){
+            if(used[s[j]]==false){
+                swap(s[i], s[j]);
+                jgo(s, i+1, ans);
+                swap(s[i], s[j]);
+                used[s[j]]=true;
+            }
+        }
+    }
+
+    vector<string> permutation(string s) {
+        vector<string> ans;
+        jgo(s, 0, ans);
+        return ans;
+    }
+};

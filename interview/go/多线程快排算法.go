@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// 交换数组中的两元素
+// swap 交换数组中的两元素
 func swap(a *[]int, i int, j int) {
 	(*a)[i], (*a)[j] = (*a)[j], (*a)[i]
 }
@@ -30,7 +30,7 @@ func qsort(a *[]int, left int, right int) {
 	go qsort(a, idx+1, right)
 }
 
-// 并行排序
+// ConcurrentSort 并行排序
 func ConcurrentSort(a *[]int, left int, right int, chanSend chan int) {
 	// 闭区间
 	if (right - left) < 10000 { // 减少创建的数量

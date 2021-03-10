@@ -19,3 +19,18 @@ public:
         return second;
     }
 };
+
+// 复习
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        ListNode *fast=head, *slow=head;
+        while(k&&fast) fast=fast->next, --k;
+        if(k==0){
+            while(fast) fast=fast->next, slow=slow->next;
+            return slow;
+        }else{
+            return nullptr;
+        }
+    }
+};

@@ -26,3 +26,24 @@ public:
         return buildNode(preorder, inorder, 0, 0, preorder.size());
     }
 };
+
+// 复习
+// 前序遍历 preorder = [3,9,20,15,7]
+// 中序遍历 inorder = [9,3,15,20,7]
+
+#define it vector<int>::iterator
+class Solution {
+public:
+    TreeNode* jgo(it pl, it pr, it il, it ir){ // 左闭右开
+        if(pl>=pr) return nullptr;
+        TreeNode *head=new TreeNode(*pl);
+        auto p=find(il, ir, *pl);
+        int len = p-il;
+        head->left=jgo(pl+1, pl+len+1, il, p);
+        head->right=jgo(pl+len+1, pr, p+1, ir);
+        return head;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return jgo(preorder.begin(), preorder.end(), inorder.begin(), inorder.end());
+    }
+};
