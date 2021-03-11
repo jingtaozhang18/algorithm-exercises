@@ -31,3 +31,38 @@ public:
         return num;
     }
 };
+
+// 复习，自己的思路破灭了， 下面的思路和上面的思路一样
+class Solution {
+public:
+    int readInt(string &s, int &i){
+      int ans=0;
+      while(i<s.size()&&s[i]>='0'&&s[i]<='9') ans*=10, ans+=s[i]-'0', ++i;
+      return ans;
+    }
+    inline void ignore(string &s, int &i){
+      while(i<s.size()&&s[i]==' ') ++i;
+    }
+    int calculate(string s) {
+      stack<int> num; char op='+';
+      int i;
+      for(i=0;i<s.size();){
+        ignore(s, i);
+        int a = readInt(s, i);
+        ignore(s, i);
+        if(op=='+') num.push(a);
+        else if(op=='-') num.push(-a);
+        else if(op=='*') {
+          int b=num.top(); num.pop();
+          num.push(a*b);
+        }else if(op=='/'){
+          int b=num.top(); num.pop();
+          num.push(b/a);
+        }
+        if(i<s.size()) op=s[i++];
+      }
+      int acc=0;
+      while(num.size()) {acc+=num.top(); num.pop();}
+      return acc;
+    }
+};
