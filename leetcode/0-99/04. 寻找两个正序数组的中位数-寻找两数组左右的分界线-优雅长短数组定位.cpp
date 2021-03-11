@@ -14,7 +14,7 @@ public:
             if(len_b%2) return (*arr_b)[len_b/2];
             else return ((double)(*arr_b)[len_b/2]+(double)(*arr_b)[len_b/2-1])/2;
         }
-        int l=-1,r=len_a-1,c,co; // 下标可能出现位置的下标
+        int l=-1,r=len_a-1,c,co; // 下标可能出现位置的下标, 在小数组上面二分查找
         int al,ar,bl,br;
         while(l<=r){
             c=(l+r)>>1;
