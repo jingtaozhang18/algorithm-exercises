@@ -36,7 +36,7 @@ class ReaderWriterWPriority{ // 写者优先的读者写者模型
     mutex mtx, mtxWriter; // 控制读者数量变量的访问
     semaphore flag; // 控制读者不能排队
     semaphore rw, w; // 读写锁， 写锁
-    int count=0, countWriger; // 读者数量
+    int count=0, countWriger=0; // 读者数量
     string mem="hello";
   public:
     ReaderWriterWPriority():rw(1), w(1), flag(1){};
@@ -98,6 +98,6 @@ class ReaderWriterFair{ // 公平的读者写者模型
         rw.wait();
           mem = s;
         rw.signal();
-      flag.signal();    //  可以释放掉了，只为了保证公平而已
+      flag.signal();
     }
 };
