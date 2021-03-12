@@ -1,28 +1,9 @@
+// 信号量模型测试
 // g++ -pthread -o main 02-semaphore.cpp  && ./main
-#include <iostream>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
+#include<iostream>
+#include<thread>
+#include"02-semaphore.hpp"
 using namespace std;
-
-#ifndef _jingtao_semaphore
-class semaphore{
-	private:		
-		int count;
-		mutex mtk;
-		condition_variable cv;
-	public:
-		semaphore(int val=1):count(val){}
-		void wait(){
-			unique_lock<mutex> lck(mtk);
-			if(--count<0) cv.wait(lck);
-		}
-		void signal(){
-			unique_lock<mutex> lck(mtk);
-			if(++count<=0) cv.notify_one();
-		}
-};
-#endif
 
 // 测试环境
 semaphore plate(1), apple(0), orange(0);

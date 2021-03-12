@@ -1,27 +1,28 @@
-// 生产者消费者模型
-#include"02-semaphore.cpp"
-#include<queue>
+// 生产者消费者模型测试
+// g++ -pthread -o main 03-producer-consumer.cpp  && ./main
+#include"03-producer-consumer.hpp"
+#include<iostream>
 using namespace std;
 
-class ProCon{
-	int count;
-	queue<int> que;
-	semaphore s;
-	mutex mtx;
-	public:
-		ProCon(int size = 1):s(size), count(size){}
-		void push(int val){
-			s.wait(); // 占用一个资源
-			mtx.lock();
-			que.push(val);
-			mtx.unlock();
-		}
-		int pop(){
-			s.signal(); // 空出一个资源
-			mtx.lock();
-			int ans = que.front();
-			que.pop();
-			mtx.unlock();
-			return ans;
-		}
-};
+ProCon que(2);
+
+void producer(){
+	int times=10, val=1;
+	while(times--) que.push(val++);
+}
+
+void consumer(){
+	int times=10;
+	while(times--) {
+		int val = que.pop();
+		cout<<"read num: "<<val<<endl;
+	}
+}
+
+int main(void){
+	thread p(producer);
+	thread c(consumer);
+	p.join();
+	c.join();
+	return 0;
+}

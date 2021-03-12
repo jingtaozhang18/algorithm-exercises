@@ -1,9 +1,9 @@
 // g++ -pthread -o main 01-condition_variable.cpp  && ./main
 // condition_variable example
-#include <iostream>           // std::cout
-#include <thread>             // std::thread
-#include <mutex>              // std::mutex, std::unique_lock
-#include <condition_variable> // std::condition_variable
+#include<iostream>           // std::cout
+#include<thread>             // std::thread
+#include<mutex>              // std::mutex, std::unique_lock
+#include<condition_variable> // std::condition_variable
 
 std::mutex mtx;
 std::condition_variable cv;
