@@ -12,6 +12,7 @@ public:
             b>>=1;
             temp<<=1;
             temp%=mod;
+            res%=mod;
         }
         return res;
     }

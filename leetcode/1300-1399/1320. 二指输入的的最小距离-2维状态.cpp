@@ -12,7 +12,7 @@ public:
         return diff_a+diff_b;
     }
     int minimumDistance(string word) {
-        // dp[i][k] 第i-1个字符时，一个手指头在word[i-1], 另一个手指头在i-1字符位置时的移动最少移动步数
+        // dp[i][k] 第i-1个字符时，一个手指头在word[i-1], 另一个手指头在k字符位置时的移动最少移动步数
         int dp[301][26], i, j, k, prev, v, n=word.size(), ans=INT_MAX; 
         for(i=0;i<=n;++i){
             for(k=0;k<26;++k){
