@@ -7,7 +7,7 @@ public:
     int numDistinct(string s, string t) {
         int i,j,m=s.size(), n=t.size();
         long long dp[n+1][m+1];  // 错误点， 实现的时候，数组和思路写反了； 题目中保证答案不会越界， 不代表中间结果不会越界
-        // 初始化DP数组  dp[i][j]表示 s[0:i]子序列中为t[0:j]的数量
+        // 初始化DP数组  dp[i][j]表示 s[0:j]子序列中为t[0:i]的数量
         for(i=0;i<=n;++i){
             for(j=0;j<=m;++j){
                 if(i==0) dp[i][j]=1;
