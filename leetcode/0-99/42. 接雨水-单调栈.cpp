@@ -12,7 +12,7 @@ public:
             k=0;
             while(!sta.empty()&&height[i]>=height[sta.top()]){ // 单减栈
             	// 左边届作为限制
-                j=sta.top(); 
+                j=sta.top();
                 sta.pop();
                 ans+=(height[j]-k)*(i-j-1);
                 k=height[j];
