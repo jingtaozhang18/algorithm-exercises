@@ -21,3 +21,21 @@ public:
         return false;
     }
 };
+
+// 复习
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums) {
+        int i, j, n=nums.size();
+        vector<int> pre_min(n);
+        pre_min[0]=INT_MAX;
+        for(i=1;i<n;++i) pre_min[i]=min(pre_min[i-1], nums[i-1]); // pre_min[i] 为i位置之前的最小值
+        stack<int> sta;
+        for(j=n-1;j>0;--j){
+            while(sta.size()&&sta.top()<=pre_min[j]) sta.pop();
+            if(sta.size()&&sta.top()<nums[j]) return true;
+            else sta.push(nums[j]);
+        }
+        return false;
+    }
+};
