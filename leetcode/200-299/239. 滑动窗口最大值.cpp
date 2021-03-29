@@ -27,3 +27,22 @@ public:
       return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int> que;
+        vector<int> ans;
+        int i, n=nums.size();
+        for(i=0;i<n;++i){
+            while(que.size()&&que.back()<nums[i]) que.pop_back();
+            que.push_back(nums[i]);
+            if(i>=k-1){
+                ans.push_back(que.front());
+                if(que.front()==nums[i-k+1]) que.pop_front();
+            }
+        }
+        return ans;
+    }
+};
