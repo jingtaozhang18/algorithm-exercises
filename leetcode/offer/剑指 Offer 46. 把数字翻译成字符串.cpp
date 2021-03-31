@@ -23,3 +23,18 @@ public:
         return jgo(arr, 0);
     }
 };
+
+// 复习
+class Solution {
+public:
+    int translateNum(int num) {
+        string str = to_string(num);
+        int i=0, n=str.size(), a=0, b=1, c;
+        for(i=0;i<n;++i){
+            if(i&&str[i-1]!='0'&&(str[i-1]-'0')*10+str[i]-'0'<=25) c=a+b; // 错误点，两个数字的时候，第一个不能是0
+            else c=b;
+            a=b,b=c;
+        }
+        return c;
+    }
+};

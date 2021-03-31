@@ -1,12 +1,11 @@
-// https://www.nowcoder.com/questionTerminal/00ffd656b9604d1998e966d555005a4b
 #include<string>
 #include<iostream>
 
 using namespace std;
 
-const char *chnNumChar[] = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
+const char *chnNumChar[] = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
 const char *chnUnitSection[] = {"", "万", "亿", "万亿"}; // 节权单位
-const char *chnUnitChar[] = {"", "拾", "佰", "仟"}; // 节内单位
+const char *chnUnitChar[] = {"", "十", "百", "千"}; // 节内单位
 
 // 节内翻译操作
 void SectionToChinese(unsigned int section, std::string &chnStr) {
@@ -22,12 +21,8 @@ void SectionToChinese(unsigned int section, std::string &chnStr) {
             }
         } else {
             zero = false; //至少有一个数字不是
-            if (unitPos != 1 || v != 1) { // 相比于中文数字，需要添加对拾元的特殊处理
-                strIns = chnNumChar[v]; //此位对应的中文数字
-                strIns += chnUnitChar[unitPos]; //此位对应的中文权位
-            } else {
-                strIns = chnUnitChar[unitPos]; //此位对应的中文权位
-            }
+            strIns = chnNumChar[v]; //此位对应的中文数字
+            strIns += chnUnitChar[unitPos]; //此位对应的中文权位
             chnStr.insert(0, strIns);
         }
         unitPos++; //移位
@@ -59,32 +54,13 @@ void NumberToChinese(unsigned int num, std::string &chnStr) {
 int main() {
     // 以万为节权进行划分
 
-    double num;
+    unsigned int num;
+    cin >> num;
+    string chnStr;
 
-    while (cin >> num) {
-        string chnStr;
-        NumberToChinese(num, chnStr);
+    NumberToChinese(num, chnStr);
 
-        // 额外增加的对小数的处理
-        // 错误点，需要乘以1000然后再取，否则容易失去精度
-        num *= 1000;
-        unsigned int a = long (num) % 1000 / 100;
-        unsigned int b = long (num) % 100 / 10;
-//        cout << int(num) << " " << a << " " << b << " " << to_string(num) << endl;
-        if (chnStr.size()) chnStr.insert(chnStr.size(), "元");
-        if (!a && !b) chnStr.insert(chnStr.size(), "整");
-        else {
-            if (a) {
-                chnStr.insert(chnStr.size(), chnNumChar[a]);
-                chnStr.insert(chnStr.size(), "角");
-            }
-            if (b) {
-                chnStr.insert(chnStr.size(), chnNumChar[b]);
-                chnStr.insert(chnStr.size(), "分");
-            }
+    cout << chnStr << endl;
 
-        }
-        cout << "人民币" << chnStr << endl;
-    }
     return 0;
 }
