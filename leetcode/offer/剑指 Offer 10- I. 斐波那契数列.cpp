@@ -14,3 +14,14 @@ public:
         return c;
     }
 };
+
+class Solution {
+public:
+    int fib(int n) {
+        if(n<2) return n;
+        int a=0, b=1, c, m=1e9+7;
+        n-=1;
+        while(n--) c=(a+b)%m, a=b, b=c;
+        return c;
+    }
+};

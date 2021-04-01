@@ -26,3 +26,33 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> ans;
+        while(head) {
+            ans.push_back(head->val); 
+            head=head->next;
+        }
+        int i=0, j=ans.size()-1;
+        while(i<j) swap(ans[i++], ans[j--]);
+        return ans;
+    }
+};
+
+// 递归
+class Solution {
+public:
+    void jgo(ListNode *head, vector<int>&ans){
+        if(!head) return;
+        jgo(head->next, ans);
+        ans.push_back(head->val);
+    }
+    vector<int> reversePrint(ListNode* head) {
+        vector<int> ans;
+        jgo(head, ans);
+        return ans;
+    }
+};

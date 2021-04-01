@@ -2,6 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// dfs
 class Solution {
 public:
     int jcalc(int x){
@@ -31,6 +32,42 @@ public:
         jgo(m,n,mem,dir,0,0,k);
         int ans=0;
         for(int i=0;i<m;++i) for(int j=0;j<n;++j) ans+=mem[i][j]?1:0;
+        return ans;
+    }
+};
+
+// bfs
+class Solution {
+public:
+    int calc(int a, int b){
+        int ans=0;
+        while(a) ans+=a%10, a/=10;
+        while(b) ans+=b%10, b/=10;
+        return ans;
+    }
+    int movingCount(int m, int n, int k) {
+        queue<pair<int, int>> que;
+        unordered_set<int> st;
+        que.push(make_pair(0, 0));
+        int dir[4][2]={0,1,0,-1,1,0,-1,0};
+        int ans=0;
+        st.insert(0);
+        while(que.size()){
+            ans++;
+            int a = que.front().first;
+            int b = que.front().second;
+            que.pop();
+            for(int i=0;i<4;++i){
+                int x=a+dir[i][0];
+                int y=b+dir[i][1];
+                if(x>=0&&x<m&&y>=0&&y<n){
+                    if(calc(x,y)<=k&&st.find(x*n+y)==st.end()){
+                        st.insert(x*n+y);
+                        que.push(make_pair(x, y));
+                    }
+                }
+            }
+        }
         return ans;
     }
 };

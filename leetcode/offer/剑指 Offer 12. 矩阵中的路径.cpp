@@ -34,3 +34,37 @@ public:
         return false;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int dir[4][2] = {0,1,0,-1,1,0,-1,0};
+    bool jgo(vector<vector<char>>&board, vector<vector<bool>>&seen, string word, int i, int j, int index){
+        if(seen[i][j]) return false;
+        if(index==word.size()) return true;
+        if(board[i][j]!=word[index]) return false; // 错误点，应对没有机会遍历index+1的情况
+        if(index==word.size()-1) return true;
+        seen[i][j]=true;  // 想好什么时候添加标记位
+        int m=board.size(), n=board[0].size();
+        for(int k=0;k<4;++k){
+            int x=i+dir[k][0];
+            int y=j+dir[k][1];
+            if(x>=0&&x<m&&y>=0&&y<n){
+                if(jgo(board, seen, word, x, y, index+1)){seen[x][y]=false; return true;}
+            }
+        }
+        seen[i][j]=false;
+        return false;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        int m=board.size(), n=board[0].size(), i, j;
+        vector<vector<bool>> seen(m, vector<bool>(n, false));
+        if(word.empty()) return true;
+        for(i=0;i<m;++i){
+            for(j=0;j<n;++j){
+                if(jgo(board, seen, word, i, j, 0)) return true;
+            }
+        }
+        return false;
+    }
+};

@@ -16,3 +16,26 @@ public:
         return flag?ans:1/ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    double myPow(double x, int n) {
+        bool flag=false;
+        double ans=1, ox=x;
+        if(n<0) {
+            x=1/x;
+            if(n==INT_MIN) n=INT_MAX, flag=true;
+            else n=-n;
+        }
+        while(n){
+            if(n&0x00000001){
+                ans *= x;
+            }
+            x*=x;
+            n>>=1;
+        }
+        if(flag) ans*=ox;
+        return ans;
+    }
+};

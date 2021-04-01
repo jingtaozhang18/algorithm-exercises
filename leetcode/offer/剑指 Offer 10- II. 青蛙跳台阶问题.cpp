@@ -13,3 +13,15 @@ public:
         return c;
     }
 };
+
+class Solution {
+public:
+    int numWays(int n) {
+        if(n<2) return 1;
+        if(n==2) return 2;
+        int a=1, b=2, c, m=1e9+7;
+        n-=2;
+        while(n--) c=(a+b)%m, a=b, b=c;
+        return c;
+    }
+};
