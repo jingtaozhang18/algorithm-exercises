@@ -22,3 +22,23 @@ public:
       return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if(height.size()<3) return 0;
+        int left=0, right=height.size()-1, maxl=height[left], maxr=height[right], ans=0;
+        ++left, --right;
+        while(left<=right){
+            if(maxl<maxr){
+                ans+=max(0, maxl-height[left]);
+                maxl=max(maxl, height[left++]);
+            }else{
+                ans+=max(0, maxr-height[right]);
+                maxr=max(maxr, height[right--]);
+            }
+        }
+        return ans;
+    }
+};
