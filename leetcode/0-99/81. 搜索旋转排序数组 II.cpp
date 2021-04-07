@@ -29,3 +29,37 @@ public:
         return false;
     }
 };
+
+// 先定位到
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        int n=nums.size(), left=0, right=n-1, mid, pivot=0, i;
+        // 先找到数组的最小值
+        while(left<=right){
+            if(nums[left]<nums[right]) {
+                pivot=left;
+                break;
+            }
+            mid=left+(right-left)/2;
+            if(nums[left]<nums[mid]){
+                left=mid+1;
+            }else if(nums[left]>nums[mid]){
+                right=mid;
+            }else{
+                for(i=left+1;i<=right;++i) if(nums[i-1]>nums[i]) break;
+                pivot=(i==right+1)?left:i; // 错误点，判断最开始的位置
+                break;
+            }
+        }
+        while(pivot>0&&nums[pivot-1]==nums[pivot]]) --pivot; // 错误点：纠正最开始的位置
+        left=0, right=n-1;
+        while(left<=right){
+            mid=left+(right-left)/2;
+            if(nums[(mid+pivot)%n]==target) return true;
+            else if(nums[(mid+pivot)%n]<target) left=mid+1;
+            else right=mid-1;
+        }
+        return false;
+    }
+};
