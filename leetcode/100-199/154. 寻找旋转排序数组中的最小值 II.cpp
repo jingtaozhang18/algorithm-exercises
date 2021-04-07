@@ -30,3 +30,22 @@ public:
         return nums[left];
     }
 };
+
+// 复习， 从左边考虑
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int left=0, n=nums.size(), right=n-1, mid, k;
+        while(left<=right){
+            if(nums[left]<nums[right]) return nums[left];
+            mid=left+(right-left)/2;
+            if(nums[left]<nums[mid]) left=mid+1;
+            else if(nums[left]>nums[mid]) right=mid;
+            else{
+                for(k=left+1;k<=right;++k) if(nums[k-1]>nums[k]) break;
+                return (k==right+1)?nums[left]:nums[k];
+            }
+        }
+        return -1;
+    }
+};
