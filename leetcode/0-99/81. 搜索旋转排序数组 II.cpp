@@ -52,7 +52,8 @@ public:
                 break;
             }
         }
-        while(pivot>0&&nums[pivot-1]==nums[pivot]]) --pivot; // 错误点：纠正最开始的位置
+        if(pivot==0&&nums[pivot]==nums[n-1]) pivot=n-1;
+        while(pivot>0&&nums[pivot-1]==nums[pivot]) --pivot; // 错误点：纠正最开始的位置
         left=0, right=n-1;
         while(left<=right){
             mid=left+(right-left)/2;
