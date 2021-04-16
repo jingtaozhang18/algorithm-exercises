@@ -20,3 +20,30 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int i, j, n=nums.size(), ans=0;
+        if(n==0) return 0;
+        if(n==1) return nums[0];
+        // 可能会偷第一家
+        int dp[n][2]; // 0是不偷，1是偷
+        for(i=0;i<n;++i) dp[i][0]=0, dp[i][1]=0;
+        dp[0][1]=nums[0];
+        for(i=1;i<n-1;++i){
+            dp[i][0]=max(dp[i-1][0], dp[i-1][1]);
+            dp[i][1]=dp[i-1][0]+nums[i];
+        }
+        ans=max(dp[n-2][0], dp[n-2][1]);
+        
+        // 不偷第一家
+        for(i=0;i<n;++i) dp[i][0]=0, dp[i][1]=0;
+        for(i=1;i<n;++i){
+            dp[i][0]=max(dp[i-1][0], dp[i-1][1]);
+            dp[i][1]=dp[i-1][0]+nums[i];
+        }
+        ans=max(max(ans, dp[n-1][0]), dp[n-1][1]);
+        return ans;
+    }
+};
