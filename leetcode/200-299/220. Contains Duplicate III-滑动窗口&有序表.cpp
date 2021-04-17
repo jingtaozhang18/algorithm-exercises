@@ -21,3 +21,23 @@ public:
         return false;
     }
 };
+
+// 队列是多余的
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        multiset<int> st;
+        int i=0;
+        for(auto &e:nums){
+          auto p = st.lower_bound(e);
+          if(p!=st.end()&&abs((long long)*p-e)<=t) return true;
+          if(st.size()&&p!=st.begin()&&abs((long long)*(--p)-e)<=t) return true;
+          st.insert(e);
+          if(i>=k){
+            st.erase(st.find(nums[i-k]));
+          }
+          ++i;
+        }
+        return false;
+    }
+};
