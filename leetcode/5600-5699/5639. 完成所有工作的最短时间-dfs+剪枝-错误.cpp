@@ -2,6 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 错误解答
 class Solution {
 public:
     int dfs(vector<int>&time, vector<int>&jobs, int k, int index){
@@ -18,7 +19,7 @@ public:
     }
     int minimumTimeRequired(vector<int>& jobs, int k) {
         sort(jobs.rbegin(), jobs.rend());
-        vector<int> time(jobs.begin(), jobs.begin()+k);
+        vector<int> time(jobs.begin(), jobs.begin()+k); // 直接安排了最大的工作均分下去，在[5,5,4,4,4] 2的情况下，无法返回最优解
         return dfs(time, jobs, k, k);
     }
 };
