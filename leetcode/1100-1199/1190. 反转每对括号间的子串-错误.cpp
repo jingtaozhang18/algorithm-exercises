@@ -2,6 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 没救了，不想看了
 class Solution {
 public:
     int jgo(string&s, string&ans, vector<int>& pos, int &left, int windex, int level){
