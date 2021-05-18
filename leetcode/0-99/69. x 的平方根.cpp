@@ -2,6 +2,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 微软考过
 class Solution {
 public:
     int mySqrt(int x) {
