@@ -55,3 +55,64 @@ public:
       return ans;
     }
 };
+
+// 复习
+struct que{
+    int x;
+    int m;
+    int index;
+    que(){}
+    que(int x, int m, int i):x(x),m(m),index(i){};
+    bool operator<(const que& other) const{
+        return this->m<other.m;
+    }
+};
+
+struct node{
+    node* childs[2];
+    node(){childs[0]=childs[1]=0;};
+};
+
+void jbuild(node* root, int x){
+    int len=32, i, j;
+    unsigned int flag=1<<(len-1);
+    node* t=root;
+    for(i=0;i<len;++i){
+        j=x&flag?1:0, flag>>=1;
+        if(!t->childs[j]) t->childs[j]=new node();
+        t=t->childs[j];
+    }
+}
+
+int jfind(node* root, int x){
+    node* t=root;
+    int len=32, y=0, i, j;
+    unsigned int flag=1<<(len-1);
+    for(i=0;i<len;++i){
+        j=x&flag?0:1;
+        y<<=1;
+        if(t->childs[j]) t=t->childs[j], y+=j;
+        else if(t->childs[1-j]) t=t->childs[1-j], y+=(1-j);
+        else return -1;
+        flag>>=1;
+    }
+    return x^y;
+}
+
+class Solution {
+public:
+    vector<int> maximizeXor(vector<int>& nums, vector<vector<int>>& queries) {
+        int i, j, n=nums.size(), m=queries.size();
+        vector<que> q(m);
+        for(i=0;i<m;++i) q[i]=que(queries[i][0], queries[i][1], i);
+        sort(q.begin(), q.end());
+        sort(nums.begin(), nums.end());
+        vector<int> ans(m);
+        node* root=new node();
+        for(i=0, j=0;i<m;++i){
+            for(;j<n&&nums[j]<=q[i].m;++j) jbuild(root, nums[j]);
+            ans[q[i].index]=jfind(root, q[i].x);
+        }
+        return ans;
+    }
+};
