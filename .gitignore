@@ -10,3 +10,4 @@ cmake-build-debug
 test*.cpp
 cache/
 .idea/
+interview/go/
