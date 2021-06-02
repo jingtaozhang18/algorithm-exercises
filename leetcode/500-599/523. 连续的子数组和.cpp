@@ -20,3 +20,19 @@ public:
       return false;
     }
 };
+
+// 复习
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        int x=0, acc=0;
+        unordered_set<int> st;
+        for(auto &e:nums){
+            acc+=e, acc%=k;
+            if(st.find(acc)!=st.end()) return true;
+            st.insert(x);
+            x=acc;
+        }
+        return false;
+    }
+};
