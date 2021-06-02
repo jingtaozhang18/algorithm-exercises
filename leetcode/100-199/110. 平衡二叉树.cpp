@@ -17,8 +17,9 @@ public:
     bool ans;
     int jgo(TreeNode* root){
         if(!root) return 0;
-        int left=jgo(root->left);
-        int right=jgo(root->right);
+        int left=0, right=0;
+        if(ans) left=jgo(root->left);
+        if(ans) right=jgo(root->right);
         if(abs(left-right)>1) ans=false;
         return max(left, right)+1;
     }
