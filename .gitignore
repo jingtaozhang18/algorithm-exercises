@@ -9,5 +9,6 @@ cmake-build-debug
 *.dSYM
 test*.cpp
 cache/
+build/
 .idea/
 interview/go/
