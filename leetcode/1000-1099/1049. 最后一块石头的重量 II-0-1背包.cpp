@@ -23,7 +23,7 @@ public:
     }
 };
 
-// 复习,背包问题，代价和价值相等
+// 复习。背包问题，代价和价值相等
 class Solution {
 public:
     int lastStoneWeightII(vector<int>& stones) {
