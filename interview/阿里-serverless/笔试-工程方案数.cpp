@@ -44,3 +44,5 @@ int main(void){
     }
     return 0;
 }
+
+// 与之类似的一道leetcode题目 [879. 盈利计划](https://leetcode-cn.com/problems/profitable-schemes/)
