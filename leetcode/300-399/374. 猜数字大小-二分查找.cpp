@@ -25,3 +25,18 @@ public:
         return -1;
     }
 };
+
+class Solution {
+public:
+    int guessNumber(int n) {
+        int left=1, right=n, center, ans;
+        while(left<=right){
+            center=left+(right-left)/2; // 很重要，正确的处理方法
+            ans=guess(center);
+            if(ans==0) return center;
+            else if(ans==1) left=center+1;
+            else right=center-1;
+        }
+        return -1;
+    }
+};
