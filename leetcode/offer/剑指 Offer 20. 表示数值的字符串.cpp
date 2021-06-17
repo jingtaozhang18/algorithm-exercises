@@ -56,3 +56,59 @@ public:
         else return false;
     }
 };
+
+// 复习
+class Solution {
+public:
+    bool isNumber(string s) {
+        int flag=0;
+        for(auto &c:s){
+            if(flag==0){ // init
+                if(c=='+'||c=='-') flag=1;
+                else if(isdigit(c)) flag=2;
+                else if(c=='.') flag=8;
+                else if(c==' ') flag=0;
+                else return false;
+            }else if(flag==1){ // +/-之后
+                if(isdigit(c)) flag=2;
+                else if(c=='.') flag=8;
+                else return false;
+            }else if (flag==2){ // 小数点左边数字
+                if(isdigit(c)) flag=2;
+                else if(c=='.') flag=3;
+                else if(c=='e'||c=='E') flag=5;
+                else if(c==' ') flag=9;
+                else return false;
+            }else if(flag==3){ // 小数点（左边有数字）
+                if(isdigit(c)) flag=4;
+                else if(c=='e'||c=='E') flag=5;
+                else if(c==' ') flag=9;
+                else return false;
+            }else if(flag==4){ // 小数点后数字部分
+                if(isdigit(c)) flag=4;
+                else if(c=='e'||c=='E') flag=5;
+                else if(c==' ') flag=9;
+                else return false;
+            }else if(flag==5){ // E/e之后
+                if(c=='+'||c=='-') flag=6;
+                else if(isdigit(c)) flag=7;
+                else return false;
+            }else if(flag==6){ // E/e +/-之后
+                if(isdigit(c)) flag=7;
+                else return false;
+            }else if(flag==7){ // E/e +/-数字部分
+                if(isdigit(c)) flag=7;
+                else if(c==' ') flag=9;
+                else return false;
+            }else if(flag==8){ // 小数点（左侧无数字）
+                if(isdigit(c)) flag=4;
+                else return false;
+            }else if(flag==9){ // 末尾空格
+                if(c==' ') flag=9;
+                else return false;
+            }
+        }
+        if(flag==2||flag==3||flag==4||flag==7||flag==9) return true;
+        return false;
+    }
+};
