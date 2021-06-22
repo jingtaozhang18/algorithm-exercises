@@ -22,3 +22,29 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    void jgo(string& s, int index, vector<string>& ans){
+        if(index==s.size()){
+            ans.push_back(s);
+            return;
+        }
+        unordered_set<char> st;
+        for(int i=index;i<s.size();++i){
+            if(st.find(s[i])!=st.end()){
+                continue;
+            }
+            swap(s[i], s[index]);
+            jgo(s, index+1, ans);
+            swap(s[i], s[index]);
+            st.insert(s[i]);
+        }
+    }
+    vector<string> permutation(string s) {
+        vector<string> ans;
+        jgo(s, 0, ans);
+        return ans;
+    }
+};
