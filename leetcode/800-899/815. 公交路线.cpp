@@ -41,3 +41,35 @@ public:
       return -1;
     }
 };
+
+// 复习，好像没有第一遍做到好
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        if(source==target) return 0; // 注意特例情况
+        // 统计公家车之间的交点
+        unordered_map<int, unordered_set<int>> mp;
+        int index=0;
+        for(auto &bus:routes) {for(auto &s:bus) mp[s].insert(index); index++;}
+        // 构建邻接矩阵
+        unordered_map<int, unordered_set<int>> mp_bus;
+        for(auto &p:mp) for(auto &b:p.second) for(auto &bse:p.second) if(b!=bse) mp_bus[b].insert(bse);
+        if(mp[target].empty()) return -1; // 没有公交车经过
+        // bfs搜索
+        unordered_map<int, int> deep;
+        queue<int> que; // bfs search
+        for(auto &p:mp[source]) {deep[p]=1; que.push(p);}
+        while(que.size()){ // 换乘公交
+            int t=que.front(); que.pop();
+            for(auto&p:mp_bus[t]){ // 
+                if(deep[p]==0||deep[p]>deep[t]+1){
+                    deep[p]=deep[t]+1;
+                    que.push(p);
+                }
+            }
+        }
+        int ans=INT_MAX;
+        for(auto&p:mp[target]) if(deep[p]!=0) ans=min(ans, deep[p]);
+        return ans==INT_MAX?-1:ans;
+    }
+};
