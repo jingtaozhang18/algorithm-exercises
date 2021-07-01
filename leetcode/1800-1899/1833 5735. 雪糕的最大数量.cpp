@@ -16,3 +16,16 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int maxIceCream(vector<int>& costs, int coins) {
+        sort(costs.begin(), costs.end());
+        int i=0, acc=0;
+        for(;i<costs.size()&&acc<=coins;++i) 
+            acc+=costs[i];
+        if(acc>coins) return i-1;
+        else return i;
+    }
+};
