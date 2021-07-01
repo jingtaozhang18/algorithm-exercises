@@ -17,3 +17,27 @@ public:
         return dp[n-1];
     }
 };
+
+// 复习，速度更快
+class Solution {
+public:
+    int numWays(int n, vector<vector<int>>& relation, int k) {
+        unordered_map<int, vector<int>> mp;
+        for(auto&r:relation) mp[r[0]].push_back(r[1]);
+        vector<vector<int>> dp(2, vector<int>(n));
+        dp[0][0]=1;
+        int i, j, a, b;
+        for(i=0;i<k;++i){ // k轮传递
+            a=i%2, b=(i+1)%2;
+            for(j=0;j<n;++j) dp[b][j]=0;
+            for(j=0;j<n;++j){
+                if(dp[a][j]){ // 开始传递
+                    for(auto &e:mp[j]){
+                        dp[b][e]+=dp[a][j];
+                    }
+                }
+            }
+        }
+        return dp[k%2][n-1];
+    }
+};
