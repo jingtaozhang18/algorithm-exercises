@@ -23,3 +23,29 @@ public:
         return r-l+1;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int left, right, center, a, b, m=nums.size();
+        if(m==0) return 0;
+        left=0, right=m-1;
+        while(left<=right){
+            center=left+(right-left)/2;
+            if(nums[center]<=target) left=center+1;
+            else right=center-1;
+        }
+        a=right; // 右边界
+        if(a<0) return 0;
+        
+        left=0, right=m-1;
+        while(left<=right){
+            center=left+(right-left)/2;
+            if(nums[center]>=target) right=center-1;
+            else left=center+1;
+        }
+        b=left; // 左边界
+        return a-b+1;
+    }
+};
