@@ -25,3 +25,13 @@ public:
         return ans;
     }
 };
+
+// 复习
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum=0, ans=INT_MIN;
+        for(auto &e:nums) sum=max(e, sum+e), ans=max(ans, sum);
+        return ans; 
+    }
+};
