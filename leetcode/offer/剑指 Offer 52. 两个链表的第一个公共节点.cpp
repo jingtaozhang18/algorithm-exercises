@@ -20,3 +20,26 @@ public:
         return a;
     }
 };
+
+// 复习
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *a=headA, *b=headB;
+        bool ba=true, bb=true;
+        while(a&&b){
+            if(a==b) return a;
+            if(a->next) a=a->next;
+            else{
+                if(ba) a=headB, ba=false;
+                else a=nullptr;
+            }
+            if(b->next) b=b->next;
+            else{
+                if(bb) b=headA, bb=false;
+                else b=nullptr;
+            }
+        }
+        return nullptr;
+    }
+};
