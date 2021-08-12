@@ -25,3 +25,23 @@ public:
         return dp[0][size-1];
     }
 };
+
+// 复习
+class Solution {
+public:
+    int longestPalindromeSubseq(string s) {
+        int m=s.size(), i, j, k;
+        vector<vector<int>> dp(m, vector<int>(m));
+        for(k=0;k<m;++k){
+            for(i=0;i<m-k;++i){
+                j=i+k;
+                if(s[i]==s[j]){
+                    if(i==j) dp[i][j]=1;
+                    else dp[i][j]=dp[i+1][j-1]+2;
+                }
+                else dp[i][j]=max(dp[i+1][j], dp[i][j-1]);
+            }
+        }
+        return dp[0][m-1];
+    }
+};
