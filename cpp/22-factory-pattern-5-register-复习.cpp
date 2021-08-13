@@ -1,3 +1,4 @@
+// 参照原版 22-factory-pattern-5-register.cpp文件
 #include <iostream>
 #include <string>
 #include <unordered_map>

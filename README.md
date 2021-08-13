@@ -12,6 +12,7 @@
 * [谷歌 Coding Competitions](coding-competitions)
 * [面试实战](interview)
 * [题目分类汇总](https://jingtao.fun/posts/6b7388fc/)
+* [Cpp学习资料](cpp)
 
 ## 头文件
 
