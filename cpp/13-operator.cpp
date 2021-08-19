@@ -8,7 +8,12 @@ class Int {
   Int(Int& other) : val(other.val) { cout << "Int(Int& other)" << endl; }
   Int(Int&& other) : val(other.val) { cout << "Int(Int&& other)" << endl; }
   Int& operator=(const Int& other) {
-    cout << "Int& operator=" << endl;
+    cout << "Int& operator=(const Int& other)" << endl;
+    this->val = other.val;
+    return *this;
+  }
+  Int& operator=(const Int&& other) {
+    cout << "Int& operator=(const Int&& other)" << endl;
     this->val = other.val;
     return *this;
   }
