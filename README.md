@@ -6,8 +6,8 @@
 * 牛客网
   * [程序员代码面试指南](code-interview)
 * [leetcode](leetcode)
-  * [剑指offer-leetcode](leetcode/offer)
-  * [程序员面试金典](leetcode/interview)
+  * [剑指 Offer（第二版）](leetcode/剑指 Offer（第二版）)
+  * [程序员面试金典（第六版）](leetcode/程序员面试金典（第六版）)
 * [微软 codility](codility)
 * [谷歌 Coding Competitions](coding-competitions)
 * [面试实战](interview)
