@@ -11,3 +11,4 @@ cache/
 build/
 .idea/
 interview/go/
+workspace.code-workspace
