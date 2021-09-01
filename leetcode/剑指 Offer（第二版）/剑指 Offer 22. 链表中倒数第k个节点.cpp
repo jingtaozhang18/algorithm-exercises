@@ -21,7 +21,7 @@ public:
 };
 
 // 复习
-class Solution {
+class Solution_1 {
 public:
     ListNode* getKthFromEnd(ListNode* head, int k) {
         ListNode *fast=head, *slow=head;
@@ -32,5 +32,17 @@ public:
         }else{
             return nullptr;
         }
+    }
+};
+
+// 复习
+class Solution_2 {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        ListNode *fast=head, *slow=head;
+        while(fast&&k) fast=fast->next, --k;
+        if(k) return nullptr;
+        while(fast) fast=fast->next, slow=slow->next;
+        return slow;
     }
 };
