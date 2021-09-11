@@ -6,7 +6,7 @@ class Solution {
  public:
   vector<vector<int>> ans;
 
-  void calc(int i, vector<int> candidates, vector<int>& path, int target) {
+  void calc(int i, vector<int>& candidates, vector<int>& path, int target) {
     if (target < 0) return;  // 没有意义了
     if (target == 0) {
       ans.push_back(path);
