@@ -36,7 +36,7 @@ class ReaderWriterWPriority{ // 写者优先的读者写者模型
     mutex mtx, mtxWriter; // 控制读者数量变量的访问
     semaphore flag; // 控制读者不能排队
     semaphore rw, w; // 读写锁， 写锁
-    int count=0, countWriger=0; // 读者数量
+    int count=0, countWriter=0; // 读者数量
     string mem="hello";
   public:
     ReaderWriterWPriority():rw(1), w(1), flag(1){};
@@ -57,7 +57,7 @@ class ReaderWriterWPriority{ // 写者优先的读者写者模型
     }
     void write(const string &s){
       mtxWriter.lock();
-        if(countWriger++==0) w.wait(); // 写者优先锁 拿到之后会阻塞之后的读进程
+        if(countWriter++==0) w.wait(); // 写者优先锁 拿到之后会阻塞之后的读进程
       mtxWriter.unlock();
       // 修改内容
       rw.wait();
@@ -65,7 +65,7 @@ class ReaderWriterWPriority{ // 写者优先的读者写者模型
       rw.signal();
       // 尝试释放写占领锁
       mtxWriter.lock();
-        if(--countWriger==0) w.signal(); // 写者优先锁 拿到之后会阻塞之后的读进程
+        if(--countWriter==0) w.signal(); // 写者优先锁 拿到之后会阻塞之后的读进程
       mtxWriter.unlock();
     }
 };
