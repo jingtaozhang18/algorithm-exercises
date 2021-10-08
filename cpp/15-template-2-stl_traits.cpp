@@ -38,7 +38,7 @@ typename I::value_type func_1(I ite) {
 */
 template <class I>
 struct iterator_traits {
-  typedef typename I::value_tpye value_type;
+  typedef typename I::value_type value_type;
 };
 
 // 偏特化，指针类型的会使用这个版本
@@ -61,5 +61,5 @@ int main() {
   std::cout << func_1(b) << std::endl;  // 可以萃取
   // 偏特化之后，两种指针都可以了
   std::cout << func_2(a) << std::endl;
-  std::cout << func_2(a) << std::endl;
+  std::cout << func_2(b) << std::endl;
 }
