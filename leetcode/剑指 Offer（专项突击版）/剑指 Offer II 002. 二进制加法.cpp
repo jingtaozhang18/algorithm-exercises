@@ -3,10 +3,10 @@
 using namespace std;
 
 class Solution {
- public:
+public:
   string addBinary(string a, string b) {
     int m = a.size(), n = b.size(), i = m - 1, j = n - 1, k = max(m, n) - 1,
-        add = 0;
+      add = 0;
     string ans(max(m, n), ' ');
     while (i >= 0 || j >= 0) {
       if (i >= 0) add += a[i--] == '1' ? 1 : 0;
