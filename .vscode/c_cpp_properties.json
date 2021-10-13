@@ -5,6 +5,7 @@
             "includePath": [
                 "${default}"
             ],
+            "cppStandard": "c++17",
             "defines": []
         }
     ],
