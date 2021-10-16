@@ -6,7 +6,8 @@
                 "${default}"
             ],
             "cppStandard": "c++17",
-            "defines": []
+            "defines": [],
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4
